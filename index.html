@@ -282,7 +282,7 @@
         <div class="btns">
           <button class="primary" id="btnSample">套用示範（沙龍高端）</button>
           <button id="btnReset">清空重填</button>
-          <button class="danger" id="btnExport">匯出 Markdown 報告</button>
+          <button class="primary" id="btnExport">複製 Markdown 報告</button>
           <button id="btnCopyPrompt">複製 GEMINI Prompt</button>
         </div>
 
@@ -319,8 +319,11 @@
         </div>
 
         <div class="section">
-          <label>Markdown 報告預覽（匯出用）</label>
-          <pre id="mdOut"></pre>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <label>Markdown 報告預覽</label>
+          <button id="btnCopyMdInline" class="primary" style="padding:6px 10px;font-size:12px;">複製</button>
+        </div>
+        <pre id="mdOut"></pre>
         </div>
 
       </div>
@@ -711,25 +714,21 @@ ${buildPrompt(sel).trim()}
     updateAll();
   };
 
-  document.getElementById("btnExport").onclick = ()=>{
+  document.getElementById("btnExport").onclick = async ()=>{
     const sel = collect();
     const risk = evaluateRisk(sel);
     const md = buildMarkdown(sel, risk);
-    const safeName = (sel.brand || "OEM_Packaging_Brief").replace(/[\/:*?"<>|]+/g,"_");
 
-    const ok = download(`${safeName}_Brief.md`, md);
-
-    // Always offer a manual fallback (some previews block downloads)
-    if(!ok){
+    const ok = await tryCopy(md);
+    if(ok){
+      alert("已複製 Markdown 報告 ✅（可直接貼到 Notion / Google Doc）");
+    }else{
+      // Fallback: show modal so user can Ctrl/Cmd+C
       openModal(
-        "Markdown 報告（下載受限備援）",
-        "此環境可能限制下載。你可以直接複製內容，貼到 Notion / Google Doc / 檔案另存為 .md。",
+        "Markdown 報告（複製受限備援）",
+        "此環境可能限制剪貼簿。請在此全選後 Ctrl/Cmd+C 複製，貼到 Notion / Google Doc。",
         md
       );
-    } else {
-      // Even if download is attempted, still helpful to show a copy-friendly modal on restricted platforms.
-      // Comment out if you don't want it.
-      // openModal("Markdown 報告（可複製備援）","若下載沒有反應，請在此手動複製另存。", md);
     }
   };
 
@@ -749,6 +748,21 @@ ${buildPrompt(sel).trim()}
   };
 
   updateAll();
+
+  // Inline copy button for Markdown preview
+  document.getElementById("btnCopyMdInline").onclick = async ()=>{
+    const text = document.getElementById("mdOut").textContent;
+    const ok = await tryCopy(text);
+    if(ok){
+      alert("已複製 Markdown 報告 ✅");
+    }else{
+      openModal(
+        "Markdown 報告（複製受限備援）",
+        "此環境可能限制剪貼簿。請在此全選後 Ctrl/Cmd+C 複製。",
+        text
+      );
+    }
+  };
 </script>
 </body>
 </html>
