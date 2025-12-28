@@ -6,24 +6,23 @@
   <title>化妝品 OEM｜包裝偏好快速釐清器</title>
   <style>
     :root{
-      --bg:#0b1220;
-      --panel:#0f1b33;
-      --card:#111f3d;
-      --muted:#9fb0d0;
-      --text:#eaf0ff;
-      --line:rgba(255,255,255,.08);
-      --good:#3ddc97;
-      --warn:#ffcc66;
-      --bad:#ff6b6b;
-      --accent:#7aa7ff;
+      /* 米白主題（企業簡報友善） */
+      --bg:#f6f3ee;              /* 整體背景米白 */
+      --panel:#faf7f2;           /* 區塊底色 */
+      --card:#ffffff;            /* 卡片純白 */
+      --muted:#7a746b;           /* 次要文字（暖灰） */
+      --text:#2f2b26;            /* 主文字（深灰黑） */
+      --line:rgba(0,0,0,.08);    /* 邊線 */
+      --good:#3aa981;
+      --warn:#e2a93b;
+      --bad:#d96b6b;
+      --accent:#c9a86a;          /* 香檳金作為重點色 */
     }
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Noto Sans TC", Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 700px at 20% -10%, rgba(122,167,255,.35), transparent 60%),
-                  radial-gradient(900px 600px at 90% 0%, rgba(61,220,151,.18), transparent 55%),
-                  var(--bg);
+      background: linear-gradient(180deg, #fbf9f5 0%, #f3efe8 100%);
       color:var(--text);
       padding:24px;
     }
@@ -49,17 +48,17 @@
       .grid{grid-template-columns:1fr}
     }
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      background: var(--card);
       border:1px solid var(--line);
       border-radius:16px;
       overflow:hidden;
-      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+      box-shadow: 0 10px 24px rgba(0,0,0,.08);
     }
     .card .hd{
       padding:14px 16px;
       border-bottom:1px solid var(--line);
       display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
-      background: rgba(255,255,255,.03);
+      background: linear-gradient(180deg, #faf7f2, #f3efe8);
     }
     .card .hd b{font-size:14px}
     .card .bd{padding:14px 16px}
@@ -70,7 +69,7 @@
       padding:10px 12px;
       border-radius:12px;
       border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
+      background:#fffdf8;
       color:var(--text);
       outline:none;
     }
@@ -80,12 +79,15 @@
     .chips{display:flex;flex-wrap:wrap;gap:8px}
     .chip{
       padding:8px 10px;border-radius:999px;border:1px solid var(--line);
-      background:rgba(255,255,255,.04);color:var(--text);font-size:12px;
+      background:#fffdf8;color:var(--text);font-size:12px;
       cursor:pointer; user-select:none;
-      transition: transform .05s ease;
+      transition: transform .05s ease, background .15s ease;
     }
     .chip:active{transform:scale(.98)}
-    .chip.on{border-color: rgba(122,167,255,.6); background: rgba(122,167,255,.12)}
+    .chip.on{
+      border-color: var(--accent);
+      background: rgba(201,168,106,.18);
+    }
     .mini{color:var(--muted);font-size:12px;line-height:1.55}
     .risk{
       display:flex;gap:8px;align-items:flex-start;
@@ -100,21 +102,24 @@
     .btns{display:flex;gap:10px;flex-wrap:wrap}
     button{
       padding:10px 12px;border-radius:12px;border:1px solid var(--line);
-      background: rgba(255,255,255,.06);
+      background:#fffdf8;
       color: var(--text);
       cursor:pointer;
     }
-    button.primary{border-color: rgba(122,167,255,.6); background: rgba(122,167,255,.18)}
+    button.primary{
+      border-color: var(--accent);
+      background: rgba(201,168,106,.25);
+    }
     button.danger{border-color: rgba(255,107,107,.55); background: rgba(255,107,107,.12)}
     pre{
       white-space:pre-wrap;
       word-break:break-word;
-      background:rgba(0,0,0,.25);
+      background:#fbf9f5;
       border:1px solid var(--line);
       border-radius:12px;
       padding:12px;
       margin:0;
-      color:#eaf0ff;
+      color:var(--text);
       font-size:12px;
       line-height:1.5;
     }
@@ -136,10 +141,10 @@
     }
     .modal{
       width:min(920px, 100%);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      background:#ffffff;
       border:1px solid var(--line);
       border-radius:16px;
-      box-shadow: 0 24px 80px rgba(0,0,0,.55);
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
       overflow:hidden;
     }
     .modalHd{
@@ -152,7 +157,7 @@
     .modalBd{padding:12px 14px}
     .modalBd textarea{
       width:100%; min-height:280px;
-      background:rgba(0,0,0,.28);
+      background:#fbf9f5;
       border:1px solid var(--line);
       border-radius:12px;
       color:var(--text);
